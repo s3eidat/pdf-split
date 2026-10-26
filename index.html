@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>PDF Split — Split a PDF or Extract Pages, Free &amp; Private | S3eidat Tools</title>
+<meta name="description" content="Split a PDF in your browser: extract selected pages, split every N pages, by ranges, or into single pages as a zip. Page thumbnails, no upload, no sign-up.">
+<meta property="og:title" content="PDF Split — free, private PDF splitter">
+<meta property="og:description" content="Extract pages or split a PDF into parts with page thumbnails. Runs 100% in your browser, nothing uploaded.">
+<meta property="og:image" content="screenshot.png">
+<link rel="icon" href="kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="kit/kit.js"></script>
+<script src="lib/pdf-lib.min.js"></script>
+</head>
+<body data-tool="pdf-split">
+<main class="s3-main">
+  <section class="s3-hero">
+    <h1>PDF Split</h1>
+    <p>Pull out the pages you need, or cut a PDF into parts. See every page as a thumbnail. Your file never leaves this device.</p>
+  </section>
+
+  <section class="card">
+    <label class="drop" id="drop">
+      <input type="file" accept=".pdf,application/pdf" hidden>
+      <svg class="i"><use href="#i-upload"/></svg>
+      <b>Drop a PDF here</b>
+      <span>or click to choose one</span>
+    </label>
+
+    <div id="work" hidden>
+      <div class="row between ps-file">
+        <div class="row"><svg class="i"><use href="#i-file"/></svg><b id="fname"></b><span class="faint" id="fmeta"></span></div>
+        <button class="btn ghost small" id="change"><svg class="i"><use href="#i-refresh"/></svg>Another file</button>
+      </div>
+
+      <div class="seg ps-modes mt" id="mode" role="group" aria-label="Split mode">
+        <button aria-pressed="true" data-v="extract">Extract pages</button>
+        <button aria-pressed="false" data-v="ranges">By ranges</button>
+        <button aria-pressed="false" data-v="every">Every N pages</button>
+        <button aria-pressed="false" data-v="single">Single pages</button>
+      </div>
+
+      <div class="ps-opts mt">
+        <div data-for="extract">
+          <label class="field">Pages to extract (click thumbnails or type)<input class="input mono" id="sel" placeholder="e.g. 1-3, 5, 9-" spellcheck="false" inputmode="numeric"></label>
+          <div class="row mt">
+            <button class="btn small" data-pick="all">All</button>
+            <button class="btn small" data-pick="none">None</button>
+            <button class="btn small" data-pick="odd">Odd</button>
+            <button class="btn small" data-pick="even">Even</button>
+            <button class="btn small" data-pick="invert">Invert</button>
+          </div>
+        </div>
+        <div data-for="ranges" hidden>
+          <label class="field">Ranges, one file each (separate with commas)<input class="input mono" id="ranges" placeholder="e.g. 1-3, 4-7, 8-" spellcheck="false" inputmode="numeric"></label>
+        </div>
+        <div data-for="every" hidden>
+          <label class="field ps-n">Pages per file<input class="input" id="every" type="number" min="1" value="2"></label>
+        </div>
+        <div data-for="single" hidden>
+          <p class="muted ps-note">Every page becomes its own PDF, bundled in a zip.</p>
+        </div>
+      </div>
+
+      <div class="row mt">
+        <span class="chip" id="summary"></span>
+        <span class="grow"></span>
+        <button class="btn primary big" id="go"><svg class="i"><use href="#i-download"/></svg><span id="goLabel">Download</span></button>
+      </div>
+
+      <div class="ps-grid mt" id="grid"></div>
+    </div>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
